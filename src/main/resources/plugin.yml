@@ -1,6 +1,6 @@
-name: AnvilUnenchanter
+name: AnvilUnEnchanter
 version: '${project.version}'
-main: lt.bongibau.anvilunenchanter.AnvilUnenchanterPlugin
+main: lt.bongibau.anvilunenchanter.AnvilUnEnchanterPlugin
 api-version: '1.14'
 load: POSTWORLD
 author: 82.111.109.49

@@ -3,7 +3,7 @@ package lt.bongibau.anvilunenchanter;
 import lt.bongibau.anvilunenchanter.listeners.CraftingListeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class AnvilUnenchanterPlugin extends JavaPlugin {
+public final class AnvilUnEnchanterPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
