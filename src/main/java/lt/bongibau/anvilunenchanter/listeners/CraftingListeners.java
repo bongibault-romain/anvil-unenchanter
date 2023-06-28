@@ -23,13 +23,28 @@ public class CraftingListeners implements Listener {
 
         if (firstItem == null || secondItem == null) return;
 
+        HumanEntity humanEntity = e.getView().getPlayer();
+
+        if (!(humanEntity instanceof Player)) return;
+
         if (secondItem.getType().equals(Material.BOOK) && !firstItem.getEnchantments().isEmpty()) {
-            e.setResult(getEnchantedBook(firstItem));
+            ItemStack book = getEnchantedBook((Player) humanEntity, firstItem);
+
+            if (book != null) {
+                EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
+
+                if (meta == null) return;
+                if (meta.getStoredEnchants().isEmpty()) return;
+
+                e.setResult(book);
+            }
         }
     }
 
     @EventHandler
     public void onDisenchantmentClickEvent(InventoryClickEvent e) {
+        if (e.getRawSlot() != 2) return;
+
         Inventory inventory = e.getClickedInventory();
         HumanEntity entity = e.getWhoClicked();
 
@@ -41,17 +56,24 @@ public class CraftingListeners implements Listener {
 
         ItemStack firstItem = inventory.getItem(0);
         ItemStack secondItem = inventory.getItem(1);
-        ItemStack result = inventory.getItem(2);
 
-        if (e.getSlot() != 2) return;
-        if (result == null) return;
-        if (result.getType() != Material.ENCHANTED_BOOK) return;
         if (firstItem == null) return;
         if (secondItem == null) return;
-        if (!this.hasValidEnchantments(result, secondItem, firstItem)) return;
+        if (firstItem.getEnchantments().isEmpty()) return;
+        if (!secondItem.getType().equals(Material.BOOK)) return;
+
+        ItemStack result = getEnchantedBook(player, firstItem);
+
+        if (!this.hasValidEnchantments(player, result, secondItem, firstItem)) return;
+        if (result == null || result.getItemMeta() == null || ((EnchantmentStorageMeta) result.getItemMeta()).getStoredEnchants().isEmpty())
+            return;
 
         ItemStack item = firstItem.clone();
-        item.getEnchantments().forEach((en, l) -> item.removeEnchantment(en));
+        item.getEnchantments().forEach((en, l) -> {
+            if (player.hasPermission("aue." + en.getKey().getKey().toLowerCase()) || player.hasPermission("aue.*")) {
+                item.removeEnchantment(en);
+            }
+        });
 
         anvilInventory.setItem(0, item);
 
@@ -65,23 +87,30 @@ public class CraftingListeners implements Listener {
         player.updateInventory();
     }
 
-    private ItemStack getEnchantedBook(ItemStack enchantedItem) {
+    private ItemStack getEnchantedBook(Player player, ItemStack enchantedItem) {
         ItemStack result = new ItemStack(Material.ENCHANTED_BOOK, 1);
 
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) result.getItemMeta();
 
         if (meta == null) return null;
 
-        enchantedItem.getEnchantments().forEach((enchantment, integer) -> meta.addStoredEnchant(enchantment, integer, true));
+        enchantedItem.getEnchantments().forEach((enchantment, integer) -> {
+            if (player.hasPermission("aue." + enchantment.getKey().getKey().toLowerCase())
+                    || player.hasPermission("aue.*")) {
+                meta.addStoredEnchant(enchantment, integer, true);
+            }
+        });
 
         result.setItemMeta(meta);
 
         return result;
     }
 
-    private boolean hasValidEnchantments(ItemStack result, ItemStack bookItem, ItemStack disenchantedItem) {
+    private boolean hasValidEnchantments(Player player, ItemStack result, ItemStack bookItem, ItemStack disenchantedItem) {
         return (!disenchantedItem.getEnchantments().isEmpty())
-                && result.getEnchantments().entrySet().stream().allMatch(entry -> disenchantedItem.getEnchantments().containsKey(entry.getKey()) && disenchantedItem.getEnchantments().get(entry.getKey()).equals(entry.getValue()))
+                && result.getEnchantments().entrySet().stream().allMatch(entry -> disenchantedItem.getEnchantments().containsKey(entry.getKey())
+                && disenchantedItem.getEnchantments().get(entry.getKey()).equals(entry.getValue())
+                && (player.hasPermission("aue." + entry.getKey().getKey().getKey().toLowerCase()) || player.hasPermission("aue.*")))
                 && (bookItem != null && bookItem.getType().equals(Material.BOOK));
     }
 
