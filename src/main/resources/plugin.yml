@@ -1,0 +1,5 @@
+name: GrindstoneUnenchanter
+version: '${project.version}'
+main: lt.bongibau.grindstoneunenchanter.GrindstoneUnenchanter
+api-version: '1.14'
+load: STARTUP
