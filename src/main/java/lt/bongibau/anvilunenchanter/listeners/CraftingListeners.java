@@ -24,7 +24,7 @@ public class CraftingListeners implements Listener {
         if (firstItem == null || secondItem == null) return;
 
         if (secondItem.getType().equals(Material.BOOK) && !firstItem.getEnchantments().isEmpty()) {
-            e.setResult(getEnchantedBook(inventory, firstItem));
+            e.setResult(getEnchantedBook(firstItem));
         }
     }
 
@@ -65,16 +65,14 @@ public class CraftingListeners implements Listener {
         player.updateInventory();
     }
 
-    private ItemStack getEnchantedBook(AnvilInventory inventory, ItemStack enchantedItem) {
+    private ItemStack getEnchantedBook(ItemStack enchantedItem) {
         ItemStack result = new ItemStack(Material.ENCHANTED_BOOK, 1);
 
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) result.getItemMeta();
 
         if (meta == null) return null;
 
-        enchantedItem.getEnchantments().forEach((enchantment, integer) -> {
-            meta.addStoredEnchant(enchantment, integer, true);
-        });
+        enchantedItem.getEnchantments().forEach((enchantment, integer) -> meta.addStoredEnchant(enchantment, integer, true));
 
         result.setItemMeta(meta);
 
