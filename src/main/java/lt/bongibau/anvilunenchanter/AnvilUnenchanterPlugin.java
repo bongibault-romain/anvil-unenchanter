@@ -7,7 +7,6 @@ public final class AnvilUnenchanterPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         this.getServer().getPluginManager().registerEvents(new CraftingListeners(), this);
     }
 
