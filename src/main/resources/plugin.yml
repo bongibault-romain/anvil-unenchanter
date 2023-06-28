@@ -1,5 +1,9 @@
-name: GrindstoneUnenchanter
+name: AnvilUnenchanter
 version: '${project.version}'
-main: lt.bongibau.grindstoneunenchanter.GrindstoneUnenchanterPlugin
+main: lt.bongibau.anvilunenchanter.AnvilUnenchanterPlugin
 api-version: '1.14'
-load: STARTUP
+load: POSTWORLD
+author: 82.111.109.49
+database: false
+description: Minecraft plugin that allow players to unenchant items using Anvil and put the enchantments in a book.
+prefix: 'AnvilUnenchanter'

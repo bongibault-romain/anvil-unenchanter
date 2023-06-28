@@ -1,11 +1,11 @@
-package lt.bongibau.grindstoneunenchanter;
+package lt.bongibau.anvilunenchanter;
 
-import lt.bongibau.grindstoneunenchanter.listeners.CraftingListeners;
+import lt.bongibau.anvilunenchanter.listeners.CraftingListeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class GrindstoneUnenchanterPlugin extends JavaPlugin {
+public final class AnvilUnenchanterPlugin extends JavaPlugin {
 
-    private static GrindstoneUnenchanterPlugin instance;
+    private static AnvilUnenchanterPlugin instance;
 
     @Override
     public void onEnable() {
@@ -20,7 +20,7 @@ public final class GrindstoneUnenchanterPlugin extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static GrindstoneUnenchanterPlugin getInstance() {
+    public static AnvilUnenchanterPlugin getInstance() {
         return instance;
     }
 }

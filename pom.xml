@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>lt.bongibau</groupId>
-    <artifactId>grindstone-unenchanter</artifactId>
+    <artifactId>anvil-unenchanter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>GrindstoneUnenchanter</name>
+    <name>AnvilUnenchanter</name>
 
     <properties>
         <java.version>1.8</java.version>

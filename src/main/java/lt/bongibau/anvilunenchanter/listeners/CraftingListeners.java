@@ -1,4 +1,4 @@
-package lt.bongibau.grindstoneunenchanter.listeners;
+package lt.bongibau.anvilunenchanter.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -6,10 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
-import org.bukkit.inventory.GrindstoneInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
